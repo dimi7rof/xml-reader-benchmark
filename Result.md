@@ -18,21 +18,22 @@
 
 | Method                    | Mean     | Error     | StdDev    | Gen0    | Allocated |
 |-------------------------- |---------:|----------:|----------:|--------:|----------:|
-| 'XmlReader'               | 2.429 us | 0.0482 us | 0.0473 us |  7.0915 |  10.85 KB |
-| 'XDocument - LINQ to XML' | 3.283 us | 0.0425 us | 0.0417 us |  7.7515 |  11.91 KB |
-| 'XElement - LINQ to XML'  | 3.189 us | 0.0302 us | 0.0282 us |  7.7019 |  11.84 KB |
-| 'XmlDocument - DOM'       | 4.860 us | 0.0968 us | 0.1356 us | 10.0250 |  15.42 KB |
-| 'XPathDocument'           | 5.489 us | 0.0729 us | 0.0810 us | 15.8691 |   24.2 KB |
 | 'XmlReader - Stream'      | 2.178 us | 0.0381 us | 0.0357 us |  2.5597 |   3.92 KB |
+| 'XmlReader'               | 2.429 us | 0.0482 us | 0.0473 us |  7.0915 |  10.85 KB |
+| 'XElement - LINQ to XML'  | 3.189 us | 0.0302 us | 0.0282 us |  7.7019 |  11.84 KB |
+| 'XDocument - LINQ to XML' | 3.283 us | 0.0425 us | 0.0417 us |  7.7515 |  11.91 KB |
 | 'XDocument - XPath'       | 4.383 us | 0.0560 us | 0.0468 us |  9.2545 |  14.23 KB |
 | 'XmlDocument - Navigator' | 4.559 us | 0.0901 us | 0.1001 us |  9.9792 |   15.3 KB |
+| 'XmlDocument - DOM'       | 4.860 us | 0.0968 us | 0.1356 us | 10.0250 |  15.42 KB |
+| 'XPathDocument'           | 5.489 us | 0.0729 us | 0.0810 us | 15.8691 |   24.2 KB |
 | 'XmlReader - Async'       | 6.435 us | 0.1208 us | 0.0943 us | 43.4723 |  66.99 KB |
 
 ### Legend
-
+```
   Mean      : Arithmetic mean of all measurements
   Error     : Half of 99.9% confidence interval
   StdDev    : Standard deviation of all measurements
   Gen0      : GC Generation 0 collects per 1000 operations
   Allocated : Allocated memory per single operation (managed only, inclusive, 1KB = 1024B)
   1 us      : 1 Microsecond (0.000001 sec)
+```
