@@ -2,3 +2,4 @@
 using XmlBenchmark;
 
 BenchmarkRunner.Run<XmlReadBenchmarks>();
+//BenchmarkRunner.Run<ExistInListBenchmark>();

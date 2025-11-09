@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Xml;
+﻿using System.Xml;
 using System.Xml.Linq;
 using System.Xml.XPath;
 
@@ -257,5 +256,95 @@ public static class XmlReaders
                 }
             }
         }
+    }
+
+    public static List<string> V13_XmlReaderReadContentAsString(string xml)
+    {
+        var list = new List<string>();
+        var settings = new XmlReaderSettings
+        {
+            IgnoreWhitespace = true,
+            IgnoreComments = true,
+            IgnoreProcessingInstructions = true,
+            DtdProcessing = DtdProcessing.Prohibit,
+            CheckCharacters = false,
+            CloseInput = false
+        };
+
+        using var reader = XmlReader.Create(new StringReader(xml), settings);
+
+        while (reader.Read())
+        {
+            if (reader.NodeType == XmlNodeType.Element && reader.Name == "DB")
+            {
+                if (reader.Read() && reader.NodeType == XmlNodeType.Text)
+                {
+                    var dbValue = reader.ReadContentAsString();
+                    if (dbValue != null) list.Add(dbValue);
+                }
+            }
+        }
+
+        return list;
+    }
+
+    public static List<string> V14_XmlReaderReadContentAsStringNoNameTable(string xml)
+    {
+        var list = new List<string>();
+        var settings = new XmlReaderSettings
+        {
+            IgnoreWhitespace = true,
+            IgnoreComments = true,
+            IgnoreProcessingInstructions = true,
+            DtdProcessing = DtdProcessing.Prohibit,
+            CheckCharacters = false,
+            CloseInput = false,
+            NameTable = null
+        };
+
+        using var reader = XmlReader.Create(new StringReader(xml), settings);
+
+        while (reader.Read())
+        {
+            if (reader.NodeType == XmlNodeType.Element && reader.Name == "DB")
+            {
+                if (reader.Read() && reader.NodeType == XmlNodeType.Text)
+                {
+                    var dbValue = reader.ReadContentAsString();
+                    if (dbValue != null) list.Add(dbValue);
+                }
+            }
+        }
+
+        return list;
+    }
+
+    public static List<string> V15_XmlReaderReadContentAsStringEqualsOrdinal(string xml)
+    {
+        var list = new List<string>();
+        var settings = new XmlReaderSettings
+        {
+            IgnoreWhitespace = true,
+            IgnoreComments = true,
+            IgnoreProcessingInstructions = true,
+            DtdProcessing = DtdProcessing.Prohibit,
+            CheckCharacters = false,
+            CloseInput = false
+        };
+
+        using var reader = XmlReader.Create(new StringReader(xml), settings);
+
+        while (reader.Read())
+        {
+            if (reader.NodeType == XmlNodeType.Element &&
+                    reader.LocalName.Equals("DB", StringComparison.Ordinal))
+            {
+                var value = reader.ReadElementContentAsString();
+                if (!string.IsNullOrEmpty(value))
+                    list.Add(value);
+            }
+        }
+
+        return list;
     }
 }

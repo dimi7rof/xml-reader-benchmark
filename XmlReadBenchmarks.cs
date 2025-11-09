@@ -10,7 +10,7 @@ public class XmlReadBenchmarks
     [GlobalSetup]
     public void Setup()
     {
-        //xml = Xmls.SmallXml;
+        xml = Xmls.SmallXml;
         xml = Xmls.LargeXml;
     }
 
@@ -57,4 +57,12 @@ public class XmlReadBenchmarks
     [Benchmark(Description = "IEnumerable ToList Async")]
     public List<string> V12_IEnumerableXmlReaderStingReaderSettingsAsyncToList()
         => [.. XmlReaders.V12_IEnumerableXmlReaderStingReaderSettingsAsync(xml)];
+
+    [Benchmark(Description = "XmlReader ReadContentAsString")]
+    public List<string> V13_XmlReaderReadContentAsString()
+        => XmlReaders.V13_XmlReaderReadContentAsString(xml);
+
+    [Benchmark(Description = "XmlReader ReadContentAsString Equals Ordinal")]
+    public List<string> V15_XmlReaderReadContentAsStringEqualsOrdinal()
+        => XmlReaders.V15_XmlReaderReadContentAsStringEqualsOrdinal(xml);
 }
