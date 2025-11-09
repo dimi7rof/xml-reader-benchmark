@@ -15,7 +15,6 @@ namespace XmlBenchmark;
 //| 'LINQ ToHashSet Any'               | 50,362.119 ns | 821.6222 ns | 1,178.3462 ns | 29.3579 |   46968 B |
 
 [MemoryDiagnoser]
-
 public class ExistInListBenchmark
 {
     private List<string> data = [];
@@ -31,8 +30,7 @@ public class ExistInListBenchmark
             IgnoreProcessingInstructions = true,
             DtdProcessing = DtdProcessing.Prohibit,
             CheckCharacters = false,
-            CloseInput = false,
-            NameTable = null
+            CloseInput = false
         };
 
         using var reader = XmlReader.Create(new StringReader(Xmls.LargeXml), settings);

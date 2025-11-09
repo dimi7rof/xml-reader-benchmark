@@ -6,6 +6,49 @@ namespace XmlBenchmark;
 
 public static class XmlReaders
 {
+    private static readonly XmlReaderSettings Settings = new()
+    {
+        IgnoreWhitespace = true,
+        IgnoreComments = true,
+        IgnoreProcessingInstructions = true,
+        DtdProcessing = DtdProcessing.Prohibit,
+        CheckCharacters = false,
+        CloseInput = false,
+        NameTable = null
+    };
+
+    public static List<string> V16_GetDbValues(string xml)
+    {
+        // Pre-size list to reduce resizes (tune depending on typical data size)
+        var result = new List<string>(256);
+
+        using var reader = XmlReader.Create(new StringReader(xml), Settings);
+
+        // Skip to the first real content node
+        reader.MoveToContent();
+
+        while (reader.Read())
+        {
+            if (reader.NodeType == XmlNodeType.Element)
+            {
+                // Fastest possible tag match:
+                // 1) ReferenceEquals is a free check (string interning path)
+                // 2) Falls back to Ordinal comparison if needed.
+                if (ReferenceEquals(reader.LocalName, "DB") ||
+                    reader.LocalName.Equals("DB", StringComparison.Ordinal))
+                {
+                    var value = reader.ReadElementContentAsString();
+                    if (value.Length != 0)
+                        result.Add(value);
+                }
+            }
+        }
+
+        return result;
+    }
+
+    
+
     public static List<string> V1_XmlReaderStingReaderSettings(string xml)
     {
         var list = new List<string>();
@@ -258,7 +301,7 @@ public static class XmlReaders
         }
     }
 
-    public static List<string> V13_XmlReaderReadContentAsString(string xml)
+    public static List<string> V2_XmlReaderReadContentAsString(string xml)
     {
         var list = new List<string>();
         var settings = new XmlReaderSettings
@@ -319,7 +362,7 @@ public static class XmlReaders
         return list;
     }
 
-    public static List<string> V15_XmlReaderReadContentAsStringEqualsOrdinal(string xml)
+    public static List<string> V1_XmlReaderReadContentAsStringEqualsOrdinal(string xml)
     {
         var list = new List<string>();
         var settings = new XmlReaderSettings
